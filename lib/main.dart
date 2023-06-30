@@ -28,10 +28,12 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
+
   void getNext() {
     current = WordPair.random();
     notifyListeners();
   }
+
 }
 
 class MyHomePage extends StatelessWidget {
@@ -41,17 +43,20 @@ class MyHomePage extends StatelessWidget {
     var pair = appState.current;
 
     return Scaffold(
-      body: Column(
-        children: [
-          Text('A random awesome idea:'),
-          BigCard(pair: pair),
-          ElevatedButton(
-            onPressed: () {
-              appState.getNext();
-            },
-            child: Text("Next"),
-          )
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BigCard(pair: pair),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                appState.getNext();
+              },
+              child: Text("Next"),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -76,7 +81,11 @@ class BigCard extends StatelessWidget {
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Text(pair.asLowerCase, style: style),
+        child: Text(
+          pair.asLowerCase,
+          style: style,
+          semanticsLabel: "${pair.first} ${pair.second}",
+        ),
       ),
     );
   }
